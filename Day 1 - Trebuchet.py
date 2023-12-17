@@ -1,4 +1,4 @@
-#Day one
+#Day 1: Trebuchet?!
 # Problem: https://adventofcode.com/2023/day/1
 #
 

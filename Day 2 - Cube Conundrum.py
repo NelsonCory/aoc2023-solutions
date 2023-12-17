@@ -1,5 +1,6 @@
-#day2.py
-import re
+# Day 2: Cube Conundrum
+# Problem: https://adventofcode.com/2023/day/2
+#
 
 def readFile():
     fileInput = open("input.txt")
