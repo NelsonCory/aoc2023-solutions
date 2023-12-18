@@ -33,30 +33,60 @@ def findPartNumbers(data):
                 currNum += data[i][j]
                 arrNums.append([i,j])
             else:
-                if len(currNum > 0):
-                    #perform adjacency test for number
+                if len(currNum) > 0:
+                    #perform adjacency test for number and add to partNumbers if adjacent
+                    if determineAdjacency(data, arrNums):
+                        partNumbers.append(int(currNum))
                     
-                    # if adjacent to a symbol, add number to partNumbers
-                    pass
                     currNum = ""
                     arrNums = []
-    
-def determineAdjacency(data, numberList):
-    for element in numberList:
-        #check above (check an additional 1 left and right for diagonals)
-        
-        #check below  (check an additional 1 left and right for diagonals)
-        
-        #check left
-        
-        #check right
-        pass
+    return partNumbers
 
+def charIsSymbolic(char):
+    return (not char.isnumeric()) and char != "."
+    
+
+def determineAdjacency(data, numberList):
+    for index in numberList: #[x,y]
+        x = index[0]
+        y = index[1]
+        #check above (check an additional 1 left and right for diagonals)
+        if index[1] != 0:
+            if charIsSymbolic(data[x][y-1]): #is not checking left or right
+                return True
+            if index[0] != 0:
+                if charIsSymbolic(data[x-1][y-1]): #check NW diagonal
+                    return True
+            if index[0] != len(data[0])-1:
+                if charIsSymbolic(data[x+1][y-1]): #check NE diagonal
+                    return True
+        #check below  (check an additional 1 left and right for diagonals)
+        if index[1] != len(data) - 1:
+            if charIsSymbolic(data[x][y+1]):
+                return True
+            
+            if index[0] != 0:
+                if charIsSymbolic(data[x-1][y+1]): #check SW diagonal
+                    return True
+            if index[0] != len(data[0])-1:
+                if charIsSymbolic(data[x+1][y+1]): #check NE diagonal
+                    return True
+        #check left
+        if index[0] != 0:
+            if charIsSymbolic(data[x-1][y]):
+                return True
+        #check right
+        if index[0] != len(data[0])-1:
+            if charIsSymbolic(data[x+1][y]):
+                return True
+    return False
 
 def main():
     fileData = readFile()
     organizedData = cleanData(fileData)
-    #print(organizedData)
-    input()
+    validParts = findPartNumbers(organizedData)
+    print(validParts)
+    print(sum(validParts))
+   
     
 main()
